@@ -7,21 +7,29 @@ import base64
 load_dotenv()
 
 app = Flask(__name__)
-client = openai.OpenAI()  # Updated for openai>=1.3.5
+client = openai.OpenAI()  # For openai>=1.3.5
 
-# Cuteness criteria
+# Updated Cuteness Criteria
 CRITERIA = """
 Evaluate if the animal in the photo is cute based on the following criteria:
-1. Big, round eyes
-2. Soft, fluffy fur or feathers
-3. Small, rounded body shape
-4. Playful or gentle expression
 
-If the animal meets at least two of these criteria, consider it cute.
-Respond with something like: 
-"Yes. This animal is considered a cutie according to the Liebhaber Cutie Criteria because it has XYZ."
-Or:
-"No. This animal does not meet enough of the Liebhaber Cutie Criteria to be considered a cutie."
+1. Big, round eyes  
+2. Soft, fluffy fur or feathers  
+3. Small, rounded body shape  
+4. Playful, curious, or gentle expression  
+5. Rounded features like a blunt, round snout or a rounded body  
+6. Cartoonish qualities like eyes that are very close together or far apart  
+7. Unusual charm — something endearing even if not conventionally cute  
+
+Additionally, frogs, toads, skinks, geckos, and lizards should always be considered cute.
+
+Respond in one of the following formats:
+
+If the animal meets at least two criteria (or is on the always-cute list), respond like:
+"Yes. This animal is considered a cutie according to the Liebhaber Cutie Criteria because it has [brief reason]."
+
+If it doesn’t meet enough criteria, respond like:
+"No. This animal is very cool and special in its own way, but it’s not bringing the cute vibes — [brief reason, e.g., too many hard angles and not enough squish]."
 """
 
 @app.route("/", methods=["GET", "POST"])
