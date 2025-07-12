@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Is this animal a cutie?</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 2em;
+        background-color: #fefefe;
+      }
+      h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+      }
+      p.subheader {
+        font-size: 1.1em;
+        max-width: 600px;
+        margin: 0 auto 2em;
+        color: #555;
+      }
+      form {
+        margin-bottom: 2em;
+      }
+      input[type="file"] {
+        margin: 1em 0;
+      }
+      .result {
+        font-size: 1.3em;
+        margin-top: 1em;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Is this animal a cutie?</h1>
+
+    <p class="subheader">
+      If you look past what society tells us is scary or gross or creepy about many of these misunderstood and underappreciated species, you'll find they are quite precious.
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+      <label for="image">Select an image of an animal:</label><br>
+      <input type="file" name="image" accept="image/*" required><br>
+      <button type="submit">Check</button>
+    </form>
+
+  {% if result %}
+  <div class="result">Result: {{ result }}</div>
+
+  {% if uploaded_image %}
+    <h3>Uploaded Photo:</h3>
+    <img src="{{ uploaded_image }}" alt="Uploaded image" style="max-width: 400px; margin-top: 10px; border: 1px solid #ccc; border-radius: 8px;">
+  {% endif %}
+{% endif %}
