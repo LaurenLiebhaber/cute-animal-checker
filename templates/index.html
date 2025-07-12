@@ -3,38 +3,73 @@
   <head>
     <meta charset="utf-8">
     <title>Is this animal a cutie?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: 'Fredoka', sans-serif;
         text-align: center;
+        background-color: #fffaf6;
         padding: 2em;
-        background-color: #fefefe;
+        color: #333;
       }
+
       h1 {
-        font-size: 2em;
-        margin-bottom: 0.5em;
+        font-size: 2.5em;
+        margin-bottom: 0.3em;
+        color: #6d2b6d;
       }
+
       p.subheader {
-        font-size: 1.1em;
-        max-width: 600px;
+        font-size: 1.2em;
+        max-width: 650px;
         margin: 0 auto 2em;
         color: #555;
       }
+
       form {
-        margin-bottom: 2em;
+        margin: 2em auto;
+        padding: 1.5em;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        max-width: 500px;
       }
+
       input[type="file"] {
         margin: 1em 0;
+        font-size: 1em;
       }
+
+      button {
+        background-color: #ff90b3;
+        border: none;
+        padding: 0.6em 1.2em;
+        font-size: 1.1em;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #ff75a0;
+      }
+
       .result {
-        font-size: 1.3em;
+        margin-top: 2em;
+        font-size: 1.4em;
+        color: #6d2b6d;
+      }
+
+      .preview {
         margin-top: 1em;
-        font-weight: bold;
+        max-width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
     </style>
   </head>
   <body>
-    <h1>Is this animal a cutie?</h1>
+    <h1>Is this animal a cutie? 🐾</h1>
 
     <p class="subheader">
       If you look past what society tells us is scary or gross or creepy about many of these misunderstood and underappreciated species, you'll find they are quite precious.
@@ -46,11 +81,12 @@
       <button type="submit">Check</button>
     </form>
 
-  {% if result %}
-  <div class="result">Result: {{ result }}</div>
+    {% if result %}
+      <div class="result">{{ result }}</div>
+    {% endif %}
 
-  {% if uploaded_image %}
-    <h3>Uploaded Photo:</h3>
-    <img src="{{ uploaded_image }}" alt="Uploaded image" style="max-width: 400px; margin-top: 10px; border: 1px solid #ccc; border-radius: 8px;">
-  {% endif %}
-{% endif %}
+    {% if uploaded_image %}
+      <img src="{{ uploaded_image }}" alt="Uploaded animal image" class="preview">
+    {% endif %}
+  </body>
+</html>
