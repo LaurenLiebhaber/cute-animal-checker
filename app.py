@@ -61,9 +61,10 @@ if request.method == "POST":
     file_hash = hashlib.md5(img_bytes).hexdigest()
 
     for submission in submissions:
-        if submission.get("hash") == file_hash:
-            result = "This image has already been submitted."
-            return render_template("index.html", result=result, uploaded_image=submission["image"])
+    if submission.get("hash") == file_hash:
+        result = "This image has already been submitted."
+        return render_template("index.html", result=result, uploaded_image=submission["image"])
+
 
     filename = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}.jpg"
     file_path = os.path.join(UPLOAD_FOLDER, filename)
