@@ -37,6 +37,18 @@
         margin-bottom: 2em;
       }
 
+      .gallery-link {
+        display: inline-block;
+        margin-bottom: 1.5em;
+        color: #567;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .gallery-link:hover {
+        text-decoration: underline;
+      }
+
       form {
         background-color: #eae4dc;
         padding: 1.5em;
@@ -99,6 +111,8 @@
       There is a little bit of cutie in (almost) every animal.
     </p>
 
+    <a href="/gallery" class="gallery-link">📷 View Gallery</a>
+
     <form method="post" enctype="multipart/form-data">
       <label for="image">Select an image of an animal:</label>
       <input type="file" name="image" accept="image/*" required>
@@ -113,5 +127,6 @@
     {% if uploaded_image %}
       <img src="{{ uploaded_image }}" alt="Uploaded animal image" class="preview">
     {% endif %}
+
   </body>
 </html>
