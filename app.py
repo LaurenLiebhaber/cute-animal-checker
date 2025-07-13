@@ -10,6 +10,9 @@ import random
 load_dotenv()
 SUBMISSIONS_FILE = "submissions.json"
 
+UPLOAD_FOLDER = "static/uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 def load_submissions():
     if os.path.exists(SUBMISSIONS_FILE):
         with open(SUBMISSIONS_FILE, "r") as f:
@@ -49,11 +52,15 @@ Respond like this:
 def index():
     result = None
     uploaded_image = None
+
     if request.method == "POST":
         file = request.files["image"]
-        img_bytes = file.read()
-        img_base64 = base64.b64encode(img_bytes).decode("utf-8")
-        uploaded_image = f"data:image/jpeg;base64,{img_base64}"
+        filename = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}.jpg"
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(file_path)
+
+        # Construct public image URL
+        uploaded_image = url_for('static', filename=f"uploads/{filename}", _external=True)
 
         messages = [
             {
