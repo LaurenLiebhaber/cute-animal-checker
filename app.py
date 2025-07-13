@@ -84,8 +84,7 @@ def index():
             "votes": 0
         })
 
-
-         save_submissions()
+        save_submissions()
 
     return render_template("index.html", result=result, uploaded_image=uploaded_image)
 
