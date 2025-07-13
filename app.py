@@ -68,9 +68,9 @@ def index():
         result = response.choices[0].message.content.strip()
 
         # Store in gallery
-        gallery_items.append({
+        submissions.append({
             "image": uploaded_image,
-            "caption": result,
+            "result": result,
             "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         })
 
