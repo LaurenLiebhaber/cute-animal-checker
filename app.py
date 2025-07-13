@@ -6,6 +6,7 @@ import base64
 import datetime
 
 load_dotenv()
+submissions = []
 
 app = Flask(__name__)
 client = openai.OpenAI()  # For openai>=1.3.5
