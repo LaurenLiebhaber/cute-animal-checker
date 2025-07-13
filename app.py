@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import base64
 import datetime
 import json
+import random
 
 load_dotenv()
 SUBMISSIONS_FILE = "submissions.json"
@@ -98,6 +99,14 @@ def vote(index):
         submissions[index]["votes"] += 1
         save_submissions()
     return redirect(url_for("gallery"))
+
+@app.route("/random")
+def random_cutie():
+    if submissions:
+        selected = random.choice(submissions)
+        return render_template("random.html", entry=selected)
+    else:
+        return render_template("random.html", entry=None)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
