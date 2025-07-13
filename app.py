@@ -54,56 +54,56 @@ def index():
     result = None
     uploaded_image = None
 
-if request.method == "POST":
-    file = request.files["image"]
-    img_bytes = file.read()
+    if request.method == "POST":
+        file = request.files["image"]
+        img_bytes = file.read()
 
-    file_hash = hashlib.md5(img_bytes).hexdigest()
+        file_hash = hashlib.md5(img_bytes).hexdigest()
 
-    for submission in submissions:
-        if submission.get("hash") == file_hash:
-            result = "This image has already been submitted."
-            return render_template("index.html", result=result, uploaded_image=submission["image"])
+        for submission in submissions:
+            if submission.get("hash") == file_hash:
+                result = "This image has already been submitted."
+                return render_template("index.html", result=result, uploaded_image=submission["image"])
 
-    filename = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}.jpg"
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
-    with open(file_path, "wb") as f:
-        f.write(img_bytes)
+        filename = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}.jpg"
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        with open(file_path, "wb") as f:
+            f.write(img_bytes)
 
-    uploaded_image = url_for('static', filename=f"uploads/{filename}", _external=True)
+        uploaded_image = url_for('static', filename=f"uploads/{filename}", _external=True)
 
-    messages = [
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": CRITERIA},
-                {
-                    "type": "image_url",
-                    "image_url": {
-                        "url": uploaded_image
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": CRITERIA},
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": uploaded_image
+                        }
                     }
-                }
-            ]
-        }
-    ]
+                ]
+            }
+        ]
 
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=messages,
-        max_tokens=500
-    )
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            max_tokens=500
+        )
 
-    result = response.choices[0].message.content.strip()
+        result = response.choices[0].message.content.strip()
 
-    submissions.append({
-        "image": uploaded_image,
-        "result": result,
-        "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "votes": 0,
-        "hash": file_hash
-    })
+        submissions.append({
+            "image": uploaded_image,
+            "result": result,
+            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "votes": 0,
+            "hash": file_hash
+        })
 
-    save_submissions()
+        save_submissions()
 
     return render_template("index.html", result=result, uploaded_image=uploaded_image)
 
