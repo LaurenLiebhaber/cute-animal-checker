@@ -65,7 +65,6 @@ if request.method == "POST":
             result = "This image has already been submitted."
             return render_template("index.html", result=result, uploaded_image=submission["image"])
 
-
     filename = f"{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}.jpg"
     file_path = os.path.join(UPLOAD_FOLDER, filename)
     with open(file_path, "wb") as f:
