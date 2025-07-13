@@ -73,6 +73,11 @@
         <div class="gallery-item">
           <img src="{{ entry.image }}" alt="Gallery animal">
           <p>{{ entry.result }}</p>
+          <form action="/vote/{{ loop.index0 }}" method="post" style="margin-top: 0.5em;">
+            <button type="submit" style="background:none;border:none;color:#a34;font-size:1em;cursor:pointer;">
+              ❤️ Like ({{ entry.votes }})
+            </button>
+           </form>
         </div>
       {% endfor %}
     </div>

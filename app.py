@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 import openai
 import os
 from dotenv import load_dotenv
@@ -30,9 +30,6 @@ Respond like this:
 - Yes: "Yes. This animal is considered a cutie according to the Liebhaber Cutie Criteria because it has [reasons]."
 - No: "No. This animal is very cool and special in its own way, but it’s not bringing the cute vibes — [reasons]."
 """
-
-# In-memory gallery store (will reset if app restarts)
-gallery_items = []
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -67,11 +64,11 @@ def index():
 
         result = response.choices[0].message.content.strip()
 
-        # Store in gallery
         submissions.append({
             "image": uploaded_image,
             "result": result,
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "votes": 0
         })
 
     return render_template("index.html", result=result, uploaded_image=uploaded_image)
@@ -79,6 +76,12 @@ def index():
 @app.route("/gallery")
 def gallery():
     return render_template("gallery.html", submissions=submissions)
+
+@app.route("/vote/<int:index>", methods=["POST"])
+def vote(index):
+    if 0 <= index < len(submissions):
+        submissions[index]["votes"] += 1
+    return redirect(url_for("gallery"))
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
