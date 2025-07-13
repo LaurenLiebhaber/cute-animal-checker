@@ -4,9 +4,22 @@ import os
 from dotenv import load_dotenv
 import base64
 import datetime
+import json
 
 load_dotenv()
-submissions = []
+SUBMISSIONS_FILE = "submissions.json"
+
+def load_submissions():
+    if os.path.exists(SUBMISSIONS_FILE):
+        with open(SUBMISSIONS_FILE, "r") as f:
+            return json.load(f)
+    return []
+
+def save_submissions():
+    with open(SUBMISSIONS_FILE, "w") as f:
+        json.dump(submissions, f)
+
+submissions = load_submissions()
 
 app = Flask(__name__)
 client = openai.OpenAI()  # For openai>=1.3.5
@@ -71,6 +84,9 @@ def index():
             "votes": 0
         })
 
+
+         save_submissions()
+
     return render_template("index.html", result=result, uploaded_image=uploaded_image)
 
 @app.route("/gallery")
@@ -81,6 +97,7 @@ def gallery():
 def vote(index):
     if 0 <= index < len(submissions):
         submissions[index]["votes"] += 1
+        save_submissions()
     return redirect(url_for("gallery"))
 
 if __name__ == '__main__':
