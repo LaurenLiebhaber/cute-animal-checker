@@ -39,6 +39,7 @@ Evaluate if the animal in the photo is cute based on the following criteria:
 5. Rounded features like a blunt, round snout or a rounded body
 6. Cartoonish qualities like eyes that are very close together or far apart
 7. Unusual charm — something endearing even if not conventionally cute
+8. Disproportionate features such as large or small limbs compared to body size
 
 Frogs, toads, skinks, geckos, and lizards are always considered cute, no matter what.
 
