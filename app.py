@@ -40,6 +40,7 @@ Evaluate if the animal in the photo is cute based on the following criteria:
 6. Cartoonish qualities like eyes that are very close together or far apart
 7. Unusual charm — something endearing even if not conventionally cute
 8. Disproportionate features such as large or small limbs compared to body size
+9. Small limbs, wings, claws, or other extremities
 
 Frogs, toads, skinks, geckos, and lizards are always considered cute, no matter what.
 
@@ -47,7 +48,7 @@ If the animal meets at least two of the criteria (or falls under the always-cute
 
 Respond like this:
 - Yes: "Yes. This animal is considered a cutie according to the Liebhaber Cutie Criteria because it has [reasons]."
-- No: "No. This animal is very cool and special in its own way, but it’s not bringing the cute vibes — [reasons]."
+- No: "No. However, this animal is very special in its own way."
 """
 
 @app.route("/", methods=["GET", "POST"])
