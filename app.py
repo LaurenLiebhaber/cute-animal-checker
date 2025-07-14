@@ -44,6 +44,8 @@ Evaluate if the animal in the photo is cute based on the following criteria:
 
 Frogs, toads, skinks, geckos, and lizards are always considered cute, no matter what.
 
+Please be generous in your interpretation, especially in edge cases. If there’s any quirk, whimsy, or slightly odd feature that could be endearing, count it.
+
 If the animal meets at least two of the criteria (or falls under the always-cute category), consider it cute.
 
 Respond like this:
@@ -128,6 +130,41 @@ def random_cutie():
         return render_template("random.html", entry=selected)
     else:
         return render_template("random.html", entry=None)
+
+@app.route("/disagree", methods=["POST"])
+def disagree():
+    image_url = request.form["image"]
+
+    second_check = """
+    Please re-analyze this image. Even if it wasn’t obviously cute at first glance,
+    is there any quirky charm, comic proportions, or unconventional cuteness?
+    Be open-minded and gentle in your assessment.
+    """
+
+    messages = [
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": second_check},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": image_url
+                    }
+                }
+            ]
+        }
+    ]
+
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=messages,
+        max_tokens=500
+    )
+
+    new_result = response.choices[0].message.content.strip()
+
+    return render_template("index.html", result=new_result, uploaded_image=image_url)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
