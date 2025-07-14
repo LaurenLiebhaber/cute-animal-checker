@@ -123,13 +123,21 @@
 
 {% if result %}
   <div class="result">{{ result }}</div>
-  {% if "No. This animal is very cool" in result %}
-    <form action="/disagree" method="post">
+
+  {% if result.startswith("No.") %}
+    <form action="{{ url_for('disagree') }}" method="post" style="margin-top: 1em;">
       <input type="hidden" name="image" value="{{ uploaded_image }}">
-      <button type="submit" style="margin-top: 1em; background-color: #e97c7c;">🙅 I disagree — try again</button>
+      <button type="submit" style="background-color: #d88; color: white; border: none; padding: 0.5em 1em; border-radius: 5px; cursor: pointer;">
+        🙋 I disagree – take another look
+      </button>
     </form>
   {% endif %}
 {% endif %}
+
+{% if uploaded_image %}
+  <img src="{{ uploaded_image }}" alt="Uploaded animal image" class="preview">
+{% endif %}
+
 
   </body>
 </html>
