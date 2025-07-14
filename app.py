@@ -104,6 +104,7 @@ def index():
         })
 
         save_submissions()
+        print(submissions)
 
     return render_template("index.html", result=result, uploaded_image=uploaded_image)
 
